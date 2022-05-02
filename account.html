@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- Hugo Tran -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Hugo Tran" />
+    <meta name="description" content="The best video in existence" />
+    <title>Account Page</title>
+    <link rel="stylesheet" href="jsjqfinal.css" />
+
+    <script>
+      //Storing session and local keys
+      const auth = sessionStorage.getItem("login");
+      const remAuth = localStorage.getItem("remLogin");
+
+      //Checking session and local key
+      if (remAuth == "yes" || auth == "yes") {
+      } else {
+        //Redirects to the login screen if session key or local key is missing
+        window.location = "index.html";
+      }
+
+      //Function to logout
+      function logOut() {
+        //Redirects to login screen
+        window.location = "index.html";
+        //Removed session and local key
+        sessionStorage.removeItem("login");
+        localStorage.removeItem("remLogin");
+      }
+    </script>
+  </head>
+  <body>
+    <button onclick="logOut()">Log Out</button>
+
+    <iframe
+      width="900"
+      height="600"
+      src="https://www.youtube.com/embed/Xw1C5T-fH2Y"
+      title="YouTube video player"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+
+    <main></main>
+    <footer></footer>
+  </body>
+</html>
