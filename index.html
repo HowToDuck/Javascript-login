@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!-- Hugo Tran -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Hugo Tran" />
+    <meta name="description" content="Simple login form" />
+    <title>Login Page</title>
+    <link rel="stylesheet" href="jsjqfinal.css" />
+
+    <script>
+      //Initializing variable
+      //verificationPass holds value from sliderUpdate function
+      var verificationPass = 0;
+      var loginPass = 0;
+      //Initializing message for incorrect login credentials or failure to complete human verification
+      let msg = "";
+
+      //Function updates text elements, slider progress, and is a login factor
+      function sliderUpdate() {
+        //Retrieve value of the slider and convert to a percentage
+        var slideValue = document.getElementById("verificationSlider").value;
+        var slidePercent = (sliderText.innerHTML =
+          (slideValue / 10) * 100 + "%");
+
+        //Change text elements of the slider to green color when passes and updates a value for the validateLogin function
+        if (slidePercent == "100%") {
+          document.getElementById("verificationText").style.color = "green";
+          document.getElementById("sliderText").style.color = "green";
+          verificationPass = 1;
+        } else {
+          //Keeps the text elements of the slider to red color in all other scenarios
+          document.getElementById("verificationText").style.color = "red";
+          document.getElementById("sliderText").style.color = "red";
+          verificationPass = 0;
+        }
+      }
+
+      //Function to login
+      //Checks login credentials with inputs, checks that the human verification slider is passed, and creates session storage and local storage (if remember is checked).
+      function validateLogin() {
+        //Saved login credentials
+        const email = "email";
+        const password = "password";
+        //Retrieving form values
+        const enteredEmail = document.getElementById("email").value;
+        const enteredPassword = document.getElementById("password").value;
+        //Checking the saved login details with the form inputs
+        if (email == enteredEmail && password == enteredPassword) {
+          loginPass = 1;
+        }
+        //Check that login is correct, and human verification is passed
+        if (loginPass == 1 && verificationPass == 1) {
+          //Creating session storage
+          sessionStorage.setItem("login", "yes");
+          //Creating local storage if the "Remember me" checkbox was checked
+          //**Local storage needs a domain for it to work as intended**
+          if (document.getElementById("default-remember").checked) {
+            localStorage.setItem("remLogin", "yes");
+          }
+          //Redirect to next page
+          window.location = "account.html";
+        } else {
+          //Creating message for incomplete/incorrect login details
+          if (loginPass == 0) {
+            msg += "Please check login credentials.\n";
+          }
+          if (verificationPass == 0) {
+            msg += "Please complete the human verification.";
+          }
+          alert(msg);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <form class="pure-form">
+      <fieldset>
+        <legend>Login Form</legend>
+        <input type="email" id="email" placeholder="Email" />
+        <input type="password" id="password" placeholder="Password" />
+        <label for="default-remember">
+          <input type="checkbox" id="default-remember" /> Remember me
+        </label>
+        <button
+          type="submit"
+          class="pure-button pure-button-primary"
+          onclick="validateLogin()"
+        >
+          Login
+        </button>
+        <div class="slidecontainer">
+          <p class="slideHeader" id="verificationText">
+            Slide right for human verification:
+          </p>
+          <input
+            type="range"
+            min="0"
+            max="10"
+            value="0"
+            id="verificationSlider"
+            oninput="sliderUpdate()"
+          />
+          <div class="slideDisplay" id="sliderText">0%</div>
+        </div>
+      </fieldset>
+    </form>
+
+    <main></main>
+    <footer></footer>
+  </body>
+</html>

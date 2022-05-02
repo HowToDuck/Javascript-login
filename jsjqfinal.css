@@ -1,0 +1,26 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #a9cbee;
+}
+form {
+  background-color: white;
+}
+iframe {
+  padding-top: 20px;
+  border: none;
+}
+.slideHeader {
+  color: red;
+}
+.slideDisplay {
+  display: inline-block;
+  color: red;
+}
